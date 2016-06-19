@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    table {
+      border: 1px solid black;
+      border-collapse: collapse;
+      empty-cells: show;
+      height: 100%;
+      width: 100%;
+    }
+    td {
+      border: 1px solid black;
+    }
+
+    #settings {
+      text-align: center;
+      padding: 10px;
+    }
+
+    @media screen
+    {
+      #container {
+        margin: auto;
+        width: 105mm;
+        height: 148mm;
+      }
+    }
+
+    @media print
+    {
+      #container {
+        width: 210mm;
+        height: 296mm;
+      }
+      #settings {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body onload="update()">
+  <div id="settings">
+    Rows: <input type="range" min="1" max="10" name="rows" id="rows" value="5">
+    Columns: <input type="range" min="1" max="10" name="columns" id="columns" value="4">
+  </div>
+  <div id="container"><div class="dummy"></div></div>
+  <script>
+    var container = document.getElementById("container");
+    function update() {
+      var rows = parseInt(rows_input.value, 10);
+      var columns = parseInt(columns_input.value, 10);
+      document.title = rows + "x" + columns
+      var table = document.createElement("table")
+      for (var r = 0; r < rows; r++) {
+        var row = table.insertRow();
+        for (var c = 0; c < columns; c++) {
+          row.insertCell();
+        }
+      }
+      container.replaceChild(table, container.firstChild);
+    }
+
+    var rows_input = document.getElementById("rows");
+    var columns_input = document.getElementById("columns");
+    rows_input.oninput = columns_input.oninput = update
+  </script>
+</body>
+</html>
